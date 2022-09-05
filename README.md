@@ -22,6 +22,29 @@ sys.stdin.readline().rstrip()
 import sys
 
 input_data = sys.stdin.readline().rstrip()
+
+import sys
+input = sys.stdin.readline()
+```
+
+## heapq
+
+priority queue
+
+```python
+import heapq
+
+q = []
+heapq.heappush(q, (0, 1))
+dist, now = heapq.heappop(q)
+```
+
+## 파이썬 기본문법
+
+## Infinity
+
+```python
+INF = int(1e9)
 ```
 
 ## Sort
@@ -313,14 +336,139 @@ child-left < parent < child-right 식
 
 # 다이나믹 프로그래밍
 
----
+`O(n)`
 
-# 에라토스테네스 체
+큰 문제를 작은 문제로 나눌 수 있는 경우 동일문제를 중복되지 않게 계산하는 방법
 
-# 메모이제이션
+Top down: 재귀방식
+
+Bottom up: 반복문 방식 (추천)
+
+메모이제이션: 계산된 결과값들을 메모하는 기법 (캐싱)
+
+Bottom up 방식 (반복문)
+
+```python
+d = [0] * 100
+
+def pibo(x):
+	d[1] = 1
+	d[2] = 1
+
+	for i in range(3, x+1):
+		d[i] = d[i-1] + d[i-2]
+```
+
+# 다익스트라
+
+`O(E log v)` E: 간선수, v: 노드수
+
+최단 거리 알고리즘 (시작 노드 → 여러 노드)
+
+음의 간선이 없는 경우 가능
+
+반복적으로 최단거리가 가장 짧은 노드를 선택하며 테이블을 갱신하는 방법
+
+최단거리 비교를 위해 priority queue (heapq) 를 사용
+
+- graph
+- visited = [False] \* (n+1)
+- distance = [INF] \* (n+1)
+
+```python
+import heapq
+import sys
+
+input = sys.stdin.readline
+INF = int(1e9)
+
+# 다익스트라
+def dijkstra(graph, start):
+	distance = [INF] * (len(graph) + 1)
+	distance[start] = 0
+	q = [] # (dist, to)
+	heapq.heappush(q, (0, start))
+
+	while q:
+		currentDist, currentNodeNum = heapq.heappop(q)
+		# 현재 노드가 이미 처리된 적이 있는 노드라면 무시
+		if distance[currentNodeNum] < currentDist:
+			continue
+		# 현재 노드와 연결된 다른 인접한 노드들을 확인
+		for node in graph[currentNodeNum]:
+			nodeNum = node[0]
+			nodeCost = node[1]
+			newDist = currentDist + nodeCost
+			# 현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧은 경우 갱신
+			if newDist < distance[nodeNum]:
+				distance[nodeNum] = newDist
+				heapq.heappush(q, (newDist, nodeNum))
+
+	return distance
+
+n, m = map(int, input().split()) # n: 노드수, m: 간선수
+start = int(input())
+
+graph = [[] for i in range(n+1)]
+for _ in range(m):
+	node, to, cost = map(int, input().split())
+	graph[node].append((to, cost))
+
+distance = dijkstra(graph, start)
+for i in range(1, n+1):
+	if distance[i] == INF:
+		print("INF")
+	else:
+		print(distance[i])
+```
 
 # 플로이드 워셜
 
-# 다익스트라
+`O(n^3)`
+
+최단 거리 알고리즘 (여러 노드 → 여러 노드)
+
+a → b 값과 a → k → b 값을 반복적으로 비교하며 최소값으로 갱신
+
+`Dab = min(Dab, Dak + Dkb)` : 점화식
+
+```python
+import sys
+
+input = sys.stdin.readline()
+INF = int(1e9)
+
+def floydWarshall(graph):
+	for k in range(1, n+1):
+		for a in range(1, n+1):
+			for b in range(1, n+1):
+				graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+	return graph
+
+n, m = map(int, input().split())
+graph = [[INT] * (n+1) for _ in range(n+1)]
+for a in range(1, n+1):
+	for b in range(1, n+1):
+		if a == b:
+			graph[a][b] = 0
+
+for _ in range(m):
+	a, b, cost = map(int, input().split())
+	graph[a][b] = cost
+
+floydWarshall(graph)
+
+for a in range(1, n+1):
+	for b in range(1, n+1):
+		if graph[a][b] == INF:
+			print("INF", end=" ")
+		else:
+			print(graph[a][b], end=" ")
+	print()
+```
+
+---
+
+# 에라토스테네스 체
 
 # GCD
