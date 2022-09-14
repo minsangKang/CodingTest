@@ -104,6 +104,8 @@ print(queue) # 역순
 
 # 그래프
 
+노드와 노드 사이에 연결된 간선 정보를 가지고 있는 자료구조
+
 인접행렬
 
 ```python
@@ -135,11 +137,11 @@ DFS: 스택(재귀)
 
 ```python
 def dfs(graph, v, visited):
-	visited[v] = True
-
-	for i in graph[v]:
-		if not visited[i]:
-			dfs(graph, i, visited)
+    visited[v] = True
+    
+    for i in graph[v]:
+        if not visited[i]:
+            dfs(graph, i, visited)
 ```
 
 BFS: 큐
@@ -148,15 +150,15 @@ BFS: 큐
 
 ```python
 def bfs(graph, start, visited):
-	queue = dequeue([start])
-	visited[start] = True
+    queue = dequeue([start])
+    visited[start] = True
 
-	while queue:
-		v = queue.popleft()
-		for i in graph[v]:
-			if not visited[i]:
-				queue.append(i)
-				visited[i] = True
+    while queue:
+        v = queue.popleft()
+        for i in graph[v]:
+            if not visited[i]:
+                queue.append(i)
+                visited[i] = True
 ```
 
 # 선택 정렬
@@ -165,13 +167,13 @@ def bfs(graph, start, visited):
 
 ```python
 def sort(array):
-	for i in range(len(array)):
-		min_index = i;
-		for j in range(i+1, len(array)):
-			if array[min_index] > array[j]:
-				min_index = j;
-		array[i], array[min_index] = array[min_index], array[i]
-	return array
+    for i in range(len(array)):
+        min_index = i;
+        for j in range(i+1, len(array)):
+            if array[min_index] > array[j]:
+                min_index = j;
+        array[i], array[min_index] = array[min_index], array[i]
+    return array
 ```
 
 # 삽입 정렬
@@ -182,13 +184,13 @@ def sort(array):
 
 ```python
 def sort(array):
-	for i in range(1, len(array)):
-		for j in range(i, 0, -1): # i to 1 까지  -1씩 감소
-			if array[j] < array[j-1]:
-				array[j], array[j-1] = array[j-1], array[j]
-			else:
-				break
-	return array
+    for i in range(1, len(array)):
+        for j in range(i, 0, -1): # i to 1 까지  -1씩 감소
+            if array[j] < array[j-1]:
+                array[j], array[j-1] = array[j-1], array[j]
+            else:
+                break
+    return array
 ```
 
 # 퀵 정렬
@@ -207,43 +209,43 @@ pivot 선택기준: 첫번째 데이터 (호어 분할 방식)
 
 ```python
 def sort(array):
-	quick_sort(array, 0, len(array)-1)
+    quick_sort(array, 0, len(array)-1)
 
 def quick_sort(array, start, end):
-	if start >= end: # 원소가 1개인 경우 종료
-		return
-	pivot = start
-	left = start+1
-	right = end
+    if start >= end: # 원소가 1개인 경우 종료
+        return
+    pivot = start
+    left = start+1
+    right = end
 
-	while left <= right:
-		while left <= end and array[left] <= array[pivot]:
-			left += 1 # find 큰값 index
-		while right > start and array[right] >= aray[pivot]:
-			right -= 1 # find 작은값 index
+    while left <= right:
+        while left <= end and array[left] <= array[pivot]:
+            left += 1 # find 큰값 index
+        while right > start and array[right] >= aray[pivot]:
+            right -= 1 # find 작은값 index
 
-		if left > right: # 엇갈린 경우: pivot, 작은값 switch
-			array[right], array[pivot] = array[pivot], array[right]
-			pivot = right
-		else: # 큰값, 작은값 switch, 이후 while 통해 다음 switch 진행
-			array[left], array[right] = array[right], array[left]
-	# pivot 보다 작은 값들 | pivot | pivot 보다 큰 값들
-	quick_sort(array, start, pivot-1)
-	quick_sort(array, pivot+1, end)
+        if left > right: # 엇갈린 경우: pivot, 작은값 switch
+            array[right], array[pivot] = array[pivot], array[right]
+            pivot = right
+        else: # 큰값, 작은값 switch, 이후 while 통해 다음 switch 진행
+            array[left], array[right] = array[right], array[left]
+    # pivot 보다 작은 값들 | pivot | pivot 보다 큰 값들
+    quick_sort(array, start, pivot-1)
+    quick_sort(array, pivot+1, end)
 ```
 
 ```python
 def sort(array):
-	if len(array) <= 1:
-		return array
+    if len(array) <= 1:
+        return array
+    
+    pivot = array[0]
+    tail = array[1:]
 
-	pivot = array[0]
-	tail = array[1:]
+    left_side = [x for x in tail if x <= pivot]
+    right_side = [x for x in tail if x > pivot]
 
-	left_side = [x for x in tail if x <= pivot]
-	right_side = [x for x in tail if x > pivot]
-
-	return sort(left_side) + [pivot] + sort(right_side)
+    return sort(left_side) + [pivot] + sort(right_side)
 ```
 
 # 계수 정렬
@@ -257,13 +259,13 @@ def sort(array):
 ```python
 def sort(array):
   counts = [0]*(max(array)+1)
-
+  
   for i in range(len(array)):
-		counts[array[i]] += 1
+        counts[array[i]] += 1
 
   sorted = []
   for i in range(len(counts)):
-		sorted += [i] * counts[i]
+        sorted += [i] * counts[i]
 
   return sorted
 ```
@@ -280,10 +282,10 @@ def sort(array):
 
 ```python
 def search(array, target):
-	for i in range(len(array)):
-		if array[i] == target:
-			return i
-	return -1
+    for i in range(len(array)):
+        if array[i] == target:
+            return i
+    return -1
 ```
 
 # 이진 탐색
@@ -296,36 +298,36 @@ def search(array, target):
 
 ```python
 def search(array, target):
-	return binary_search(array, target, 0, len(array)-1)
+    return binary_search(array, target, 0, len(array)-1)
 
 def binary_search(array, target, start, end):
-	if start > end:
-		return -1
+    if start > end:
+        return -1
 
-	mid = (start + end) // 2
-	if array[mid] == target:
-		return mid
-	elif target < array[mid]:
-		return binary_search(array, target, start, mid-1)
-	else:
-		return binary_search(array, target, mid+1, end)
+    mid = (start + end) // 2
+    if array[mid] == target:
+        return mid
+    elif target < array[mid]:
+        return binary_search(array, target, start, mid-1)
+    else:
+        return binary_search(array, target, mid+1, end)
 ```
 
 - 반복문 스타일
 
 ```python
 def binary_search(array, target, start, end):
-	while start <= end:
-		mid = (start + end) // 2
-
-		if array[mid] == target:
-			return mid
-		elif target < array[mid]:
-			end = mid - 1
-		else:
-			start = mid + 1
-
-	return -1
+    while start <= end:
+        mid = (start + end) // 2
+        
+        if array[mid] == target:
+            return mid
+        elif target < array[mid]:
+            end = mid - 1
+        else:
+            start = mid + 1
+    
+    return -1
 ```
 
 # 이진 탐색 트리
@@ -352,11 +354,11 @@ Bottom up 방식 (반복문)
 d = [0] * 100
 
 def pibo(x):
-	d[1] = 1
-	d[2] = 1
+    d[1] = 1
+    d[2] = 1
 
-	for i in range(3, x+1):
-		d[i] = d[i-1] + d[i-2]
+    for i in range(3, x+1):
+        d[i] = d[i-1] + d[i-2]
 ```
 
 # 다익스트라
@@ -371,9 +373,11 @@ def pibo(x):
 
 최단거리 비교를 위해 priority queue (heapq) 를 사용
 
+인접 리스트 방식의 그래프 (노드 수가 많은 경우 유리)
+
 - graph
-- visited = [False] \* (n+1)
-- distance = [INF] \* (n+1)
+- visited = [False] * (n+1)
+- distance = [INF] * (n+1)
 
 ```python
 import heapq
@@ -384,42 +388,42 @@ INF = int(1e9)
 
 # 다익스트라
 def dijkstra(graph, start):
-	distance = [INF] * (len(graph) + 1)
-	distance[start] = 0
-	q = [] # (dist, to)
-	heapq.heappush(q, (0, start))
+    distance = [INF] * (len(graph) + 1)
+    distance[start] = 0
+    q = [] # (dist, to)
+    heapq.heappush(q, (0, start))
 
-	while q:
-		currentDist, currentNodeNum = heapq.heappop(q)
-		# 현재 노드가 이미 처리된 적이 있는 노드라면 무시
-		if distance[currentNodeNum] < currentDist:
-			continue
-		# 현재 노드와 연결된 다른 인접한 노드들을 확인
-		for node in graph[currentNodeNum]:
-			nodeNum = node[0]
-			nodeCost = node[1]
-			newDist = currentDist + nodeCost
-			# 현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧은 경우 갱신
-			if newDist < distance[nodeNum]:
-				distance[nodeNum] = newDist
-				heapq.heappush(q, (newDist, nodeNum))
+    while q:
+        currentDist, currentNodeNum = heapq.heappop(q)
+        # 현재 노드가 이미 처리된 적이 있는 노드라면 무시
+        if distance[currentNodeNum] < currentDist:
+            continue
+        # 현재 노드와 연결된 다른 인접한 노드들을 확인
+        for node in graph[currentNodeNum]:
+            nodeNum = node[0]
+            nodeCost = node[1]
+            newDist = currentDist + nodeCost
+            # 현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧은 경우 갱신
+            if newDist < distance[nodeNum]:
+                distance[nodeNum] = newDist
+                heapq.heappush(q, (newDist, nodeNum))
 
-	return distance
+    return distance
 
 n, m = map(int, input().split()) # n: 노드수, m: 간선수
 start = int(input())
 
 graph = [[] for i in range(n+1)]
 for _ in range(m):
-	node, to, cost = map(int, input().split())
-	graph[node].append((to, cost))
+    node, to, cost = map(int, input().split())
+    graph[node].append((to, cost))
 
 distance = dijkstra(graph, start)
 for i in range(1, n+1):
-	if distance[i] == INF:
-		print("INF")
-	else:
-		print(distance[i])
+    if distance[i] == INF:
+        print("INF")
+    else:
+        print(distance[i])
 ```
 
 # 플로이드 워셜
@@ -432,6 +436,8 @@ a → b 값과 a → k → b 값을 반복적으로 비교하며 최소값으로
 
 `Dab = min(Dab, Dak + Dkb)` : 점화식
 
+인접 행렬 방식의 그래프 (노드 수가 적은 경우 유리)
+
 ```python
 import sys
 
@@ -439,32 +445,224 @@ input = sys.stdin.readline()
 INF = int(1e9)
 
 def floydWarshall(graph):
-	for k in range(1, n+1):
-		for a in range(1, n+1):
-			for b in range(1, n+1):
-				graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
-	return graph
+    for k in range(1, n+1):
+        for a in range(1, n+1):
+            for b in range(1, n+1):
+                graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
+    return graph
 
 n, m = map(int, input().split())
 graph = [[INT] * (n+1) for _ in range(n+1)]
 for a in range(1, n+1):
-	for b in range(1, n+1):
-		if a == b:
-			graph[a][b] = 0
+    for b in range(1, n+1):
+        if a == b:
+            graph[a][b] = 0
 
 for _ in range(m):
-	a, b, cost = map(int, input().split())
-	graph[a][b] = cost
+    a, b, cost = map(int, input().split())
+    graph[a][b] = cost
 
 floydWarshall(graph)
 
 for a in range(1, n+1):
-	for b in range(1, n+1):
-		if graph[a][b] == INF:
-			print("INF", end=" ")
-		else:
-			print(graph[a][b], end=" ")
-	print()
+    for b in range(1, n+1):
+        if graph[a][b] == INF:
+            print("INF", end=" ")
+        else:
+            print(graph[a][b], end=" ")
+    print()
+```
+
+# 서로소 집합
+
+공통 원소가 없는 두 집합
+
+union: 하나의 집합으로 합치는 연산 (루트노드값 설정)
+
+find: 원소가 속한 집합을 알려주는 연산 (루트노드값 반환)
+
+큰 루트노드가 작은 루트노드를 가리키도록 설정
+
+경로 압축 기법을 통해 루트노드값을 갱신
+
+부모 테이블 필요
+
+```python
+def find_parent(parents, x):
+    if parents[x] != x:
+        parents[x] = find_parent(parents, parents[x])
+    return parents[x]
+
+def union_parent(parents, a, b):
+    a = find_parent(parents, a)
+    b = find_parent(parents, b)
+
+    if a < b:
+        parents[b] = a
+    else:
+        parents[a] = b
+
+v, e = map(int, input().split())
+parents = [0]*(v+1)
+
+for i in range(1, v+1):
+    parents[i] = i
+
+for i in range(e):
+    a, b = map(int, input().split())
+    union_parent(parents, a, b)
+
+for i in range(1, v+1):
+    print(find_parent(parents, i), end=" ")
+print()
+```
+
+# 사이클 판별
+
+방향 그래프에서 판별: DFS 알고리즘 사용
+
+무방향 그래프에서 판별: 서로소 집합 알고리즘 사용
+
+각 간선의 루트 노드가 같다면 → 사이클 
+
+```python
+def find_parent(parents, x):
+    if parents[x] != x:
+        parents[x] = find_parent(parents, parents[x])
+    return parents[x]
+
+def union_parent(parents, a, b):
+    a = find_parent(parents, a)
+    b = find_parent(parents, b)
+    
+    if a < b:
+        parents[b] = a
+    else:
+        parents[a] = b
+
+v, e = map(int, input().split())
+parents = [0]*(v+1)
+
+for i in range(1, v+1):
+    parents[i] = i
+
+cycle = False
+
+for i in range(e):
+    a, b = map(int, input().split())
+
+    if find_parent(parents, a) == find_parent(parents, b):
+        cycle = True
+        break
+    else:
+        union_parent(parents, a, b)
+
+if cycle:
+    print("사이클 발생")
+else:
+    print("사이클 비발생")
+```
+
+# 신장 트리
+
+모든 노드를 포함하면서 사이클이 존재하지 않는 부분 그래프
+
+모든 도시를 연결할 때 최소 비용과 관련된 크루스칼 알고리즘의 경우 신장트리를 활용한 알고리즘
+
+# 크루스칼 알고리즘
+
+`O(E log E)`
+
+신장 트리를 최소한의 비용으로 연결하는 알고리즘
+
+모든 간선에 대해 정렬, 사이클이 발생하지 않는 거리가 짧은 간선부터 집합에 포함
+
+1. 간선에 대해 정렬
+2. find_paren 확인 후 union
+3. 간선의 비용 총 합: 최종 비용
+
+```python
+def find_parent(parents, x):
+    if parents[x] != x:
+        parents[x] = find_parent(parents, parents[x])
+    return parents[x]
+
+def union_parent(parents, a, b):
+    a = find_parent(parents, a)
+    b = find_parent(parents, b)
+    if a < b:
+        parents[b] = a
+    else:
+        parents[a] = b
+
+v, e = map(int, input().split())
+parents = [0]*(v+1)
+edges = []
+result = 0
+
+for i in range(1, v+1):
+    parents[i] = i
+
+for _ in range(e):
+    a, b, cost = map(int, input().split())
+    edges.append((cost, a, b))
+edges.sort()
+
+for edge in edges:
+    cost, a, b = edge
+
+    if find_parent(parents, a) != find_parent(parents, b):
+        union_parent(parents, a, b)
+        result += cost
+
+print(result)
+```
+
+# 위상 정렬
+
+`O(V + E)`
+
+방향성에 거스르지 않도록 순서대로 나열 (그래프상의 선후관계)
+
+진입차수 테이블이 필요
+
+1. 진입차수가 0인 노드를 큐에 넣는다
+2. 큐가 빌때까지 꺼내며 해당 노드부터 출발하는 간선을 제거하며 진입차수가 0인 노드를 큐에 넣는다
+
+```python
+from collections import deque
+
+v, e = map(int, input().split())
+indegree = [0] * (v+1)
+graph = [[] for i in range(v+1)]
+
+for _ in range(e):
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    indegree[b] += 1
+
+def topology_sort():
+    result = []
+    q = deque()
+
+    # 처음 시작시 indegree 값이 0인 노드를 넣고 시작
+    for i in range(1, v+1):
+        if indegree[i] == 0:
+            q.append(i)
+
+    while q:
+        now = q.popleft()
+        result.append(now)
+
+        for i in graph[now]:
+            indegree[i] -= 1
+            if indegree[i] == 0:
+                q.append(i)
+
+    for i in result:
+        print(i, end=" ")
+
+topology_sort()
 ```
 
 ---
