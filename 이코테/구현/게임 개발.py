@@ -1,50 +1,38 @@
-# 0: 육지, 1: 바다, 2: 가본 육지
-# 회전: direction++%4
-move = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+move = [(-1, 0), (0, 1), (1, 0), (0, -1)] #북, 동, 남, 서
 
-moveCount = 1
 n, m = map(int, input().split())
 x, y, direction = map(int, input().split())
-graph = []
-for row in range(n):
-    graph.append(list(map(int, input().split())))
 
-def validPosition(poX, poY):
-    return poX >= 0 and poX < m and poY >= 0 and poY < n
+graph = [list(map(int, input().split())) for _ in range(n)]
 
-while(True):
-    # 이동 후
-    rotationCount = 0
+moveCount = 1
+while True:
     graph[x][y] = 2
-    # 회전하며 이동 확인
+    directionCount = 0
     for i in range(4):
-        rotationCount += 1
-        direction += 1
+        directionCount += 1
+        direction -= 1
         direction %= 4
-
-        nextX = x + move[direction][0]
-        nextY = y + move[direction][1]
-
-        if validPosition(nextX, nextY) and graph[nextX][nextY] == 0:
-            x = nextX
-            y = nextY
+        
+        nx = x + move[direction][0]
+        ny = y + move[direction][1]
+        
+        if graph[nx][ny] == 0:
+            x = nx
+            y = ny
             moveCount += 1
             break
-        else:
-            continue
-    # 4방향 모두 확인 이후
-    if rotationCount != 4:
+    
+    if directionCount != 4:
         continue
     
-    backDirection = (direction + 2)%4
-    backX = x + move[backDirection][0]
-    backY = y + move[backDirection][1]
-
-    if validPosition(backX, backY) and graph[backX][backY] == 2:
-        x = backX
-        y = backY
+    nx = x - move[direction][0]
+    ny = y - move[direction][1]
+    
+    if graph[nx][ny] == 2:
+        x = nx
+        y = ny
     else:
         break
-
+        
 print(moveCount)
-

@@ -1,18 +1,16 @@
-xPos = ["a", "b", "c", "d", "e", "f", "g", "h"]
-move = [(-2, -1), (-1, -2), (1, -2), (2, -1), (2, 1), (1, 2), (-1, 2), (-2, 1)]
+move = [(2, 1), (2, -1), (-2, 1), (-2, -1), (1, 2), (1, -2), (-1, 2), (-1, -2)]
 
-input = list((input()))
-x = xPos.index(input[0])+1
-y = int(input[1])
+inputs = list(input())
+row = ord(inputs[0]) - ord('a') + 1
+column = int(inputs[1])
 
 count = 0
-for direction in move:
-    nextX = x + direction[0]
-    nextY = y + direction[1]
-
-    if nextX >= 1 and nextX <= 8 and nextY >= 1 and nextY <= 8:
-        count += 1
-
+for m in move:
+    nr = row + m[0]
+    nc = column + m[1]
+    if nr < 1 or nr > 8:
+        continue
+    if nc < 1 or nc > 8:
+        continue
+    count += 1
 print(count)
-
-
