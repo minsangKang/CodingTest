@@ -1,23 +1,6 @@
-def sort(array, reverse):
-    if len(array) <= 1:
-        return array
-    
-    pivot = array[0]
-    tail = array[1:]
+n = int(input())
+array = [int(input()) for _ in range(n)]
+array.sort(reverse=True)
 
-    left_side = [x for x in tail if x <= pivot]
-    right_side = [x for x in tail if x > pivot]
-
-    if reverse == True:
-        return left_side + [pivot] + right_side
-    else:
-        return right_side + [pivot] + left_side
-
-N = int(input())
-numbers = []
-for i in range(N):
-    numbers.append(int(input()))
-numbers = sort(numbers, True)
-for n in numbers:
-    print(n, end=" ")
-print()
+for i in array:
+    print(i, end=" ")
