@@ -1,44 +1,44 @@
-# 유향그래프, 간선 비용 존재
-# 출발: C / 수신받는 도시수, 총 시간
-# 출발 부터 연결된 노드까지의 최단거리 -> 다익스트라 알고리즘
+import sys
 import heapq
+input = sys.stdin.readline
 INF = int(1e9)
 
-def dijkstra(graph, times, start):
-    times[start] = 0
+n, m, c = map(int, input().split())
+graph = [[] for _ in range(n)]
+
+for _ in range(m):
+    x, y, z = map(int, input().split())
+    graph[x-1].append((y-1, z))
+    
+def dijkstra(start, n):
+    distance = [INF] * n
+    distance[start-1] = 0
     q = []
-    heapq.heappush(q, (0, start))
-
+    heapq.heappush(q, (0, start-1))
+    
     while q:
-        time, node = heapq.heappop(q)
-        
-        if times[node] < time:
+        dist, now = heapq.heappop(q)
+        if dist > distance[now]:
             continue
+        
+        for n in graph[now]:
+            node = n[0]
+            cost = n[1]
+            newDist = dist + cost
+            
+            if newDist < distance[node]:
+                distance[node] = newDist
+                heapq.heappush(q, (newDist, node))
+                
+    return distance
 
-        for n in graph[node]:
-            nodeTime, nodeNum = n
-            newTime = time + nodeTime
-            if newTime < times[nodeNum]:
-                times[nodeNum] = newTime
-                heapq.heappush(q, (newTime, nodeNum))
-
-
-N, M, start = map(int, input().split())
-
-graph = [[] for i in range(N)]
-for i in range(M):
-    s, t, time = map(int, input().split())
-    graph[s-1].append((time, t-1))
-
-times = [INF]*N
-dijkstra(graph, times, start-1)
+distance = dijkstra(c, n)
 
 nodeCount = 0
-maxTime = -1
-
-for n in range(N):
-    if times[n] != INF:
+maxTime = 0
+for i in range(n):
+    if distance[i] != INF:
         nodeCount += 1
-        maxTime = max(maxTime, times[n])
+        maxTime = max(maxTime, distance[i])
+        
 print(nodeCount-1, maxTime)
-    

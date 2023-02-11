@@ -1,29 +1,26 @@
-# 시작 노드: 1, 간선 비용: 1
-# 1 -> K -> X 최소시간을 계산
+import sys
+input = sys.stdin.readline
 INF = int(1e9)
 
-def floydWarshall(graph, N):
-    for i in range(N):
-        for j in range(N):
-            for k in range(N):
-                graph[i][j] = min(graph[i][j], graph[i][k] + graph[k][j])
+n, m = map(int, input().split())
+graph = [[INF]*n for _ in range(n)]
 
-N, M = map(int, input().split())
-graph = [[INF]*N for i in range(N)]
-for i in range(N):
-    for j in range(N):
+for i in range(n):
+    for j in range(n):
         if i == j:
             graph[i][j] = 0
 
-for i in range(M):
-    s, t = map(int, input().split())
-    graph[s-1][t-1] = 1
-    graph[t-1][s-1] = 1    
+for _ in range(m):
+    a, b = map(int, input().split())
+    graph[a-1][b-1] = 1
+    graph[b-1][a-1] = 1
 
 X, K = map(int, input().split())
-floydWarshall(graph, N)
+    
+for k in range(n):
+    for a in range(n):
+        for b in range(n):
+            graph[a][b] = min(graph[a][b], graph[a][k] + graph[k][b])
 
-first = graph[0][K-1]
-second = graph[K-1][X-1]
-canGo = first != INF and second != INF
-print(first + second if canGo else -1)
+distance = graph[0][K-1] + graph[K-1][X-1]
+print(-1 if distance >= INF else distance)
