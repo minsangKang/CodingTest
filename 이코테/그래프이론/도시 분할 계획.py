@@ -1,40 +1,38 @@
-# 양방향 간선, 간선 비용 존재
-# 간선비용 가장 높은 간선 제거 -> 두개의 마을로 쪼개짐
-# 비용이 낮은 간선부터 연결, N-2개의 간선 선택 -> N-2개의 간선 비용 총합
-def find(parents, x):
-    if parents[x] != x:
-        parents[x] = find(parents, parents[x])
-    return parents[x]
+import sys
+input = sys.stdin.readline
 
-def union(parents, x, y):
-    parent = min(find(parents, x), find(parents, y))
-    parents[x] = parent
-    parents[y] = parent
-
-N, M = map(int, input().split())
-parents = [0]*(N)
-for i in range(N):
-    parents[i] = i
-
+n, m = map(int, input().split())
+parent = [i for i in range(n)]
 edges = []
-for i in range(M):
+
+for _ in range(m):
     a, b, cost = map(int, input().split())
     edges.append((cost, a-1, b-1))
-# 가장 비용이 큰 간선 제거 -> 두개의 마을로 설정
+    
 edges.sort()
-edges.pop()
-# 비용이 적은 간선부터 사이클이 발생하지 않는 N-2개의 간선 -> 총합
-count = 0
-totalCost = 0
+
+def find_parent(x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent[x])
+    return parent[x]
+
+def union_parent(a, b):
+    a = find_parent(a)
+    b = find_parent(b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+    
+result = 0
+maxCost = 0
 for edge in edges:
     cost, a, b = edge
-    cycle = find(parents, a) == find(parents, b)
-    if cycle == False:
-        union(parents, a, b)
-        count += 1
-        totalCost += cost
-    
-    if count == N-2:
-        break
-
-print(totalCost)
+    a = find_parent(a)
+    b = find_parent(b)
+    if a != b:
+        union_parent(a, b)
+        result += cost
+        maxCost = cost
+        
+print(result - maxCost)

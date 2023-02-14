@@ -1,25 +1,24 @@
-def find(parents, x):
-    if parents[x] !=  x:
-        parents[x] = find(parents, parents[x])
-    return parents[x]
+n, m = map(int, input().split())
+parent = [i for i in range(n+1)]
 
-def union(parents, x, y):
-    parent = min(find(parents, x), find(parents, y))
-    parents[x] = parent
-    parents[y] = parent
+def find_parent(x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent[x])
+    return parent[x]
 
-UNION = 0
-FIND = 1
-
-N, M = map(int, input().split())
-parents = [0]*(N+1)
-for i in range(N+1):
-    parents[i] = i
-
-for i in range(M):
-    func, a, b = map(int, input().split())
-    if func == UNION:
-        union(parents, a, b)
+def union_parent(a, b):
+    a = find_parent(a)
+    b = find_parent(b)
+    if a < b:
+        parent[b] = a
     else:
-        sameParent = find(parents, a) == find(parents, b)
-        print("YES" if sameParent else "NO")
+        parent[a] = b
+
+for _ in range(m):
+    unionCheck, a, b = map(int, input().split())
+    if unionCheck == 1:
+        a = find_parent(a)
+        b = find_parent(b)
+        print("YES" if a == b else "NO")
+    else:
+        union_parent(a, b)
