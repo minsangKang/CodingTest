@@ -1,56 +1,61 @@
-# 각 나라의 인구수가 주어졌을 때, 인구 이동이 몇 번 발생하는지 출력
-# 인접한 두 나라의 수가 l 이상 r 이하인 경우 인구이동
+import sys
 from collections import deque
-moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+input = sys.stdin.readline
+moves = [(-1, 0), (1, 0), (0, -1), (0, 1)] # 상 하 좌 우
 
 n, l, r = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(n)]
-visited = [[False]*n for _ in range(n)]
+graph = []
+for _ in range(n):
+    graph.append(list(map(int, input().split())))
 
-def bfs(i, j):
-    united = []
-    united.append((i, j))
-    q = deque()
-    q.append((i, j))
-    visited[i][j] = True
-    sum = 0
+# 상 하 좌 우 인접나라 확인
+def process(graph, x, y):
+    check[x][y] = True
+    contry = [(x, y)]
+    q = deque(contry)
+    sum = graph[x][y]
+    count = 1
 
     while q:
         x, y = q.popleft()
+
         for move in moves:
             nx, ny = x+move[0], y+move[1]
             if nx < 0 or nx >= n:
                 continue
             if ny < 0 or ny >= n:
                 continue
-            diff = abs(graph[nx][ny] - graph[x][y])
-            if l <= diff <= r and visited[nx][ny] == False:
-                q.append((nx, ny))
-                united.append((nx, ny))
-                visited[nx][ny] = True
-                sum += graph[nx][ny]
 
-    if sum == 0:
-        return False
+            if check[nx][ny] == False:
+                if l <= abs(graph[nx][ny] - graph[x][y]) <= r:
+                    check[nx][ny] = True
+                    contry.append((nx, ny))
+                    q.append((nx, ny))
+                    sum += graph[nx][ny]
+                    count += 1
+    # contry 계산
+    for i, j in contry:
+        graph[i][j] = sum // count
     
-    newValue = sum // len(united)
-    for x, y in united:
-        graph[x][y] = newValue
-    return True
+    return count != 1
 
-count = 0
+# 인구 이동 횟수
+moveCount = 0
+
 while True:
-    moved = False
-    for i in range(n):
-        for j in range(n):
-            if visited[i][j] == False:
-                moved = bfs(i, j)
+    # 개방 확인 여부
+    check = [[False]*n for _ in range(n)]
+    # 개방 여부
+    isMoving = False
+    # 모든 나라 국경선 개방가능 여부 확인
+    for x in range(n):
+        for y in range(n):
+            if check[x][y] == False:
+                isMoving |= process(graph, x, y)
     
-    if moved:
-        count += 1
-        visited = [[False]*n for _ in range(n)]
-    else:
+    # 개방된 나라가 없는 경우
+    if isMoving == False:
         break
+    moveCount += 1
 
-print(count)
-                    
+print(moveCount)
