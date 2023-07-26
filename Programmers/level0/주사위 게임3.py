@@ -1,32 +1,23 @@
 def solution(a, b, c, d):
-    dict = {}
-    for num in [a, b, c, d]:
-        if num in dict:
-            dict[num] += 1
-        else:
-            dict[num] = 1
-            
-    nums = set([a, b, c, d])
-    if len(nums) == 1:
+    nums = [a, b, c, d]
+    counts = [nums.count(i) for i in nums]
+    maxCount = max(counts)
+
+    if maxCount == 4:
         return 1111*a
-    elif len(nums) == 4:
-        return min([a, b, c, d])
-    elif len(nums) == 2:
-        # 3, 1 쌍
-        numbers = list(nums)
-        if dict[numbers[0]] == 1 and dict[numbers[1]] == 3:
-            return (10*numbers[1]+numbers[0])**2
-        elif dict[numbers[0]] == 3 and dict[numbers[1]] == 1:
-            return (10*numbers[0]+numbers[1])**2    
-        # 2, 2 쌍
-        elif dict[numbers[0]] == 2 and dict[numbers[1]] == 2:
+    elif maxCount == 1:
+        return min(nums)
+    elif maxCount == 3:
+        return (10*nums[counts.index(3)]+nums[counts.index(1)])**2
+    elif maxCount == 2:
+        # 2, 2쌍
+        if min(counts) == 2:
+            numbers = list(set(nums))
             return (numbers[0]+numbers[1])*abs(numbers[0]-numbers[1])
-    # 2, 1, 1 쌍
-    elif len(nums) == 3:
-        numbers = list(nums)
-        for num in numbers:
-            if dict[num] == 2:
-                numbers.strip(num)
-                return numbers[0]*numbers[1]
-        
-print(solution(6, 4, 2, 5))
+        # 2, 1, 1쌍
+        else:
+            numbers = []
+            for i in range(4):
+                if counts[i] == 1:
+                    numbers.append(nums[i])
+            return numbers[0]*numbers[1]
