@@ -1,43 +1,128 @@
-# CodingTest
-
-## [코딩테스트 정리 노션](https://deeply-eggplant-5ec.notion.site/fc62882281f84f06af00aa5ad3bc56ec)
+# CodingTest with Python
+[Python 문법 및 알고리즘 정리 블로그링크](https://velog.io/@minsang/series/Python)
 
 ---
 
 # 파이썬 라이브러리
-
-## itertools
-
-permutation
-
-## collections
-
-deque(queue)
-
-## sys
-
-sys.stdin.readline().rstrip()
-
+## itertools (순열, 조합) ⭐️⭐️
 ```python
-import sys
+# 순열
+from itertools import permutation
 
-input_data = sys.stdin.readline().rstrip()
+for case in permutations(array, len(array)):
+    ...
+```
+```python
+# 조합
+from itertools import combinations
 
-import sys
-input = sys.stdin.readline()
+for case in combinations(array, len(array)):
+    ...
 ```
 
-## heapq
+## functools (reduce)
+```python
+# reduce
+from functools import reduce
 
-priority queue
+result = reduce(lambda x, y: x*y, array)
+```
 
+## collections (deque(queue)) ⭐️
+```python
+from collections import deque
+
+queue = deque() # queue 생성
+queue.append('a') # push
+queue[0] # peak 'a'
+queue.popleft() # pop 'a'
+queue.extend(['b', 'c', 'd']) # 배열 push
+```
+
+## heapq (priorityQueue) ⭐️
 ```python
 import heapq
 
-q = []
-heapq.heappush(q, (0, 1))
-dist, now = heapq.heappop(q)
+pq = [] # priorityQueue 생성
+heapq.heappush(pq, (0, 1)) # push
+pq[0] # peak (0, 1)
+heapq.heappop(pq) # pop (0, 1)
+
+array = [b, c, a]
+heapq.heapify(array) # array를 priorityQueue로 생성
+heapq.heappop(array) # pop 'a'
 ```
+
+## math (gcd)
+```python
+import math
+
+value = math.gcd(3, 6)
+
+```
+
+## sys (readline)
+```python
+import sys
+
+input = sys.stdin.readline()
+```
+
+# Python 기본제공
+
+## Stack
+```python
+stack = [] # stack 생성
+stack.append('a') # push
+stack[0] # peak
+stack.pop() # pop 'a'
+```
+
+## Set
+```python
+s = set() # set 생성
+s1 = set(['a', 'b', 'c']) # array를 set으로 생성
+s2 = set(['b', 'c', 'd'])
+
+s1 & s2 # 교집합 {'b', 'c'}
+s1 | s2 # 합집합 {'a', 'b', 'c', 'd'}
+s1 - s2 # 교집합을 제거한 s1 {'a'}
+
+{ x for x in 'abcde' } # list comprehension {'a', 'b', 'c', 'd', 'e'}
+
+'a' in s1 # True
+
+list(s1) # set to list ['a', 'b', 'c']
+```
+
+## Dictionary
+```python
+d = {} # dictionary 생성
+d = {'a': 1, 'b': 2}
+d = dict([('a', 1), ('b', 2)]) # touble array로 생성
+d_from_list = { x: ord(x) for x in 'abc' } # list comprehension {'a': 97, 'b': 98, 'c': 99}
+
+d['a'] # value 접근 1
+d['a'] = 3 # value update
+del d['a'] # value delete
+
+'a' in d # True
+list(d) # ['a', 'b']
+
+d.items(): # [(key, value)] 반환 [('b': 2)]
+d.keys() # ['b']
+d.values() # [2]
+
+for key, value in items(): # key, value 순차접근
+    print(key, value)
+```
+
+## List
+```python
+
+```
+
+---
 
 ## 파이썬 기본문법
 
@@ -70,20 +155,6 @@ stack.pop()
 
 print(stack) # 최하단부터
 print(stack[::-1]) # 최상단부터
-```
-
-## Queue
-
-```python
-from collections import deque
-
-queue = deque()
-queue.append(5)
-queue.popleft()
-
-print(queue) # 들어온 순
-queue.reverse()
-print(queue) # 역순
 ```
 
 ---
@@ -664,9 +735,3 @@ def topology_sort():
 
 topology_sort()
 ```
-
----
-
-# 에라토스테네스 체
-
-# GCD
