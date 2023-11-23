@@ -58,7 +58,13 @@ heapq.heappop(array) # pop 'a'
 import math
 
 value = math.gcd(3, 6)
+```
 
+## copy
+```python
+import copy
+
+array2 = copy.deepcopy(array)
 ```
 
 ## sys (readline)
@@ -68,7 +74,9 @@ import sys
 input = sys.stdin.readline()
 ```
 
-# Python 기본제공
+---
+
+# Python 기본 자료구조
 
 ## Stack
 ```python
@@ -119,66 +127,171 @@ for key, value in items(): # key, value 순차접근
 
 ## List
 ```python
+array = [] # list 생성
+array.append('a') # push
+array.remove('a') # delete
+array = list(range(0, 5)) # [0, 1, 2, 3, 4]
+array.index(3) # index 3
+array.count(3) # 1
 
+array[-1] # 4
+array[:-1] # return [0, 1, 2, 3]
+array[1:-1] # return [1, 2, 3]
+array[::2] # return [0, 2, 4]
+array[-1::-2] # return [4, 2, 0]
+array[1:-1][::-1] # return [3, 2, 1]
+
+temp = array + [5, 6] # return [1, 2, 3, 4, 5, 6]
+array += [5, 6] # update [1, 2, 3, 4, 5, 6]
+```
+
+## Tuple
+```python
+tuple = ('a', 1) # tuple 생성
+tuple[0] # 'a'
+tuple[1] # 1
+```
+
+## String
+```python
+str(1) # '1'
+str(1)+str(2) # '12'
+string = 'abc'
+string.swapcase() # return 'ABC'
+string.isupper() # return False
+string.islower() # return True
+string.upper() # return 'ABC'
+string.lower() # return 'abc'
+
+string = '123'
+string.isdecimal() # return True
+
+string = ' abcd '
+string.strip() # return 'abcd'
+```
+
+## range
+```python
+list(range(0, 5)) # [0, 1, 2, 3, 4]
+for i in range(0, 5):
+    print(i, end=", ") # 0, 1, 2, 3, 4,
 ```
 
 ---
 
-## 파이썬 기본문법
+# 파이썬 기능들
+
+## sort
+```python
+# list.sort()
+array = [1, 4, 5, 2, 3]
+array.sort() # update [1, 2, 3, 4, 5]
+array.sort(key=lambda x: -x) # update [5, 4, 3, 2, 1]
+array.sort(key=lambda x: abs(x-3)) # update [3, 4, 2, 5, 1]
+array.sort(reverse=True) # update [5, 4, 3, 2, 1]
+```
+
+## sorted
+```python
+# sorted(array)
+array = [1, 4, 5, 2, 3]
+sorted(array) # return [1, 2, 3, 4, 5]
+sorted(array, key=lambda x: -x) # return [5, 4, 3, 2, 1]
+sorted(array, reverse=True) # return [5, 4, 3, 2, 1]
+
+sorted({1: 'a', 2: 'b'}) # dictionary: return [1, 2]
+sorted([('a', 3, 10), ('b', 1, 9), ('c', 2, 9)], key=lambda x: (x[2], x[1])) # tuple: return [('b', 1, 9), ('c', 2, 9), ('a', 3, 10)]
+```
+
+## filter
+```python
+array = [1, 2, 3, 4, 5]
+list(filter(lambda x: x>2, array)) # [3, 4, 5]
+```
+
+## enumerate
+```python
+array [1, 2, 3]
+for idx, value in enumerate(array):
+    print(idx, value, end=",") # 0 1,1 2,2 3,
+```
+
+```python
+total = sum([1, 2, 3]) # 6
+array = sum([[1, 2], [3, 4]], []) # [1, 2, 3, 4]
+```
+
+## join
+```python
+# string.join()
+''.join(['a', 'b', 'c']) # return 'abc'
+```
+
+## replace
+```python
+# string.replace()
+'abcde'.replace('a', 'A') # return 'Abcde'
+```
+
+## ord
+```python
+counts = [0]*26
+for char in 'abcde':
+    counts[ord(char)-ord('a')] += 1
+```
+
+## map
+```python
+a, b = map(int, input().split())
+```
 
 ## Infinity
-
 ```python
 INF = int(1e9)
 ```
 
-## Sort
-
+## abs
 ```python
-arr = [1,2,3]
-sorted_arr = sorted(arr)
-
-arr.sort()
-
-data = [("바나나", 2), ("당근", 3)]
-data.sort(key=lambda x : (x[0], x[1]))
+abs(-4) # 4
 ```
 
-# 파이썬 자료구조
-
-## Stack
-
+# 3항연산자
 ```python
-stack = []
-stack.append(5)
-stack.pop()
-
-print(stack) # 최하단부터
-print(stack[::-1]) # 최상단부터
+num = 5
+odd = True if num%2 == 1 else False # True
 ```
 
 ---
 
-# 그리디
+# 코딩테스트 알고리즘
 
-가장 큰 순서대로, 가장 작은 순서대로 와 같은 기준
-
-정렬 알고리즘과 짝을 이룬다.
-
+## 그리디
+가장 큰 순서대로, 가장 작은 순서대로 와 같은 기준 (정렬 알고리즘과 한쌍) <br>
 큰 단위가 작은 단위의 배수형태여야 한다. 아닌 경우 다이나믹 프로그래밍으로 접근
 
-# 구현
++ while문 대신 몫을 계산하는 식으로 접근
 
-완전탐색
+## 구현
+완전탐색 or 시뮬레이션
+```python
+move = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
-시뮬레이션
+ny, nx = y+move[direction][0], x+move[direction][1]
+if ny < 0 or ny >= n or nx < 0 or nx >= n:
+    direction = (direction+1)%4
+    y, x = y+move[direction][0], x+move[direction][1]
+```
+```python
+dict = {'left': (-1, 0), 'right': (1, 0), 'up': (0, 1), 'down': (0, -1)}
+
+nx, ny = x+dict[key][0], y+dict[key][1]
+if nx < -n or nx > n:
+```
 
 # 그래프
-
 노드와 노드 사이에 연결된 간선 정보를 가지고 있는 자료구조
 
 인접행렬
-
 ```python
 n, m = map(int, input().split())
 graph = []
@@ -188,7 +301,6 @@ for row in range(n):
 ```
 
 인접 리스트
-
 ```python
 n, m = map(int, input().split())
 graph = [[] for i in range(n)]
