@@ -1,3 +1,3 @@
 def solution(s, skip, index):
-    chars = [chr(i) for i in range(ord('a'), ord('z')+1) if chr(i) not in skip]
-    return "".join([chars[(chars.index(i)+index)%len(chars)] for i in s])
+    chars = list(filter(lambda x: x not in skip, [chr(i) for i in range(ord('a'), ord('z')+1)]))
+    return "".join([chars[(chars.index(char)+index)%len(chars)] for char in s])
