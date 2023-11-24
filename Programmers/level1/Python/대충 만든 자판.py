@@ -1,12 +1,12 @@
 def solution(keymap, targets):
     dict = {}
-    for key in keymap:
-        for i, k in enumerate(key):
-            if k not in dict:
-                dict[k] = i+1
+    for chars in keymap:
+        for idx, char in enumerate(chars):
+            if char in dict:
+                dict[char] = min(dict[char], idx+1)
             else:
-                dict[k] = min(dict[k], i+1)
-                
+                dict[char] = idx+1
+    
     result = []
     for target in targets:
         count = 0
@@ -16,5 +16,6 @@ def solution(keymap, targets):
                 break
             count += dict[t]
         result.append(count)
-    
+        
     return result
+            
