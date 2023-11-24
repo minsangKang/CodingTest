@@ -1,11 +1,14 @@
 def solution(n, m, section):
-    result = 1
-    startNum = section[0]
-    for num in section:
-        endNum = startNum+m-1
-        if startNum <= num and num <= endNum:
+    count = 1
+    start = section[0]
+    
+    for s in section:
+        end = start+m-1
+        
+        if s <= end:
             continue
         else:
-            result += 1
-            startNum = num
-    return result
+            count += 1
+            start = s
+            
+    return count
