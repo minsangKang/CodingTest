@@ -1,22 +1,18 @@
 def solution(s):
-    result = []
-    while s:
-        x = s[0]
-        xCount, nxCount = 1, 0
-        
-        for i in range(1, len(s)):
-            if s[i] == x:
-                xCount += 1
-            else:
-                nxCount += 1
-                
-            if xCount == nxCount:
-                result.append(s[0:i])
-                s = s[i+1:]
-                break
-                
-        if xCount != nxCount:
-            result.append(s)
-            break
-                
-    return len(result)
+    x = s[0]
+    xCount = 1
+    notX = 0
+    divisionCount = 1
+    for i in range(1, len(s)):
+        if xCount == 0 and notX == 0:
+            divisionCount += 1
+            x = s[i]
+        if s[i] == x:
+            xCount += 1
+        else:
+            notX += 1
+        if xCount == notX:
+            xCount = 0
+            notX = 0
+    
+    return divisionCount
