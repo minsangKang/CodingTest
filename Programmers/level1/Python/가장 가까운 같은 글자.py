@@ -1,10 +1,11 @@
 def solution(s):
     dict = {}
     result = []
-    for i in range(len(s)):
-        if s[i] in dict:
-            result.append(i - dict[s[i]])
+    for idx, char in enumerate(s):
+        if char in dict:
+            result.append(idx - dict[char])
         else:
             result.append(-1)
-        dict[s[i]] = i
+        dict[char] = idx
     return result
+            
