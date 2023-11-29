@@ -1,12 +1,11 @@
 def solution(k, score):
-    scores = []
     result = []
+    arr = []
     for s in score:
-        scores.append(s)
-        scores = sorted(scores, reverse=True)
-        
-        if len(scores) <= k:
-            result.append(scores[-1])
+        arr.append(s)
+        arr = sorted(arr)
+        if len(arr) <= k:
+            result.append(arr[0])
         else:
-            result.append(scores[k-1])
+            result.append(arr[-k])
     return result
