@@ -3,6 +3,50 @@
 
 ---
 
+# 코딩테스트 시간복잡도
+제한시간 1초(n초) = 10^8번 연산 (100,000,000번) </br>
+따라서 입력값 n의 크기에 따라 시간복잡도를 고려하여 10^8번 연산 이내로 풀릴 수 있어야 한다.
+
+## n <= 20
+**`O(n!)`**, **`O(2^n)`**
+- 어떤 알고리즘이든 가능
+
+## n <= 100
+**`O(n^3)`**
+- 3중 for문
+- 플로이드 워셜 알고리즘
+- 완전탐색
+
+## n <= 1000
+**`O(n^2)`**
+- 2중 for문
+- 벨만 포드 알고리즘
+- 선택 정렬
+- 삽입 정렬
+
+## n <= 10000 ⭐️
+**`O(n)`**
+- 동적 프로그래밍(DP)
+- 계수 정렬
+- 유니언 파인드
+- 위상 정렬
+
+**`O(n log n)`**
+- 이진 탐색
+- 파라메트릭 서치
+- 다익스트라 알고리즘
+- 세그먼트 트리
+- 투 포인터
+- 퀵 정렬
+- 크루스칼 알고리즘
+
+## n <= 10^8
+**`O(log n)`**
+- 수학적 기믹이 필요
+- 유클리드 호제법
+
+---
+
 # 파이썬 라이브러리
 ## itertools (순열, 조합) ⭐️⭐️
 ```python
@@ -92,6 +136,10 @@ s = set() # set 생성
 s1 = set(['a', 'b', 'c']) # array를 set으로 생성
 s2 = set(['b', 'c', 'd'])
 
+s1.add('c') # push
+s1.remove('c') # remove
+s1.update(['a', 'b', 'c']) # 배열 push
+
 s1 & s2 # 교집합 {'b', 'c'}
 s1 | s2 # 합집합 {'a', 'b', 'c', 'd'}
 s1 - s2 # 교집합을 제거한 s1 {'a'}
@@ -108,7 +156,7 @@ list(s1) # set to list ['a', 'b', 'c']
 d = {} # dictionary 생성
 d = {'a': 1, 'b': 2}
 d = dict([('a', 1), ('b', 2)]) # touble array로 생성
-d_from_list = { x: ord(x) for x in 'abc' } # list comprehension {'a': 97, 'b': 98, 'c': 99}
+d_from_list = { x: ord(x) for x in 'abc' } # dictionary comprehension {'a': 97, 'b': 98, 'c': 99}
 
 d['a'] # value 접근 1
 d['a'] = 3 # value update
@@ -143,6 +191,15 @@ array[1:-1][::-1] # return [3, 2, 1]
 
 temp = array + [5, 6] # return [1, 2, 3, 4, 5, 6]
 array += [5, 6] # update [1, 2, 3, 4, 5, 6]
+
+# 2차원배열
+n, m = 2, 3
+graph = [[0]*m for _ in range(n)]
+# [[0, 0, 0],
+#  [0, 0, 0]]
+graph[n-1][m-1] = 1
+# [[0, 0, 0],
+#  [0, 0, 1]]
 ```
 
 ## Tuple
@@ -216,8 +273,11 @@ for idx, value in enumerate(array):
     print(idx, value, end=",") # 0 1,1 2,2 3,
 ```
 
+## sum
 ```python
+# 총합
 total = sum([1, 2, 3]) # 6
+# 1차원 list화
 array = sum([[1, 2], [3, 4]], []) # [1, 2, 3, 4]
 ```
 
@@ -240,6 +300,11 @@ for char in 'abcde':
     counts[ord(char)-ord('a')] += 1
 ```
 
+## abs
+```python
+abs(-4) # 4
+```
+
 ## map
 ```python
 a, b = map(int, input().split())
@@ -248,11 +313,6 @@ a, b = map(int, input().split())
 ## Infinity
 ```python
 INF = int(1e9)
-```
-
-## abs
-```python
-abs(-4) # 4
 ```
 
 # 3항연산자
@@ -303,7 +363,7 @@ for row in range(n):
 인접 리스트
 ```python
 n, m = map(int, input().split())
-graph = [[] for i in range(n)]
+graph = [[] for _ in range(n)]
 graph[0].append((1, 7)) #노드 1, cost 7
 graph[1].append((0, 7)) #노드 0, cost 7
 ```
@@ -365,12 +425,12 @@ def sort(array):
     return array
 ```
 
-## 퀵 정렬
+## 퀵 정렬 ⭐️
 `O(n log n)` but 데이터가 거의 정렬되어 있을 때 비효율적<br>
 `pivot` 을 기준으로 `작은`, `큰` 데이터 좌우 분리, 분리된 좌, 우 역시 동일 방식으로 정렬<br>
 
-좌 → 우: pivot 보다 큰 데이터, 좌 ← 우: pivot 보다 작은 데이터를 찾아 위치를 서로 변경<br>
-작은 데이터 위치가 큰 데이터 위치보다 작은 경우: pivot, 작은 데이터 switch, 종료<br>
+좌 → 우: pivot 보다 큰 데이터의 위치(left), 좌 ← 우: pivot 보다 작은 데이터의 위치(right)를 찾아 위치를 서로 변경<br>
+작은 데이터 위치(left)가 큰 데이터 위치(right)보다 크거나 같은 경우: pivot, 작은 데이터 switch, 종료<br>
 
 재귀 종료조건: 리스트가 1개인 경우 정렬된 상태이므로 반환<br>
 pivot 선택기준: 첫번째 데이터 (호어 분할 방식)<br>
@@ -463,7 +523,7 @@ def binary_search(array, target, start, end):
     return -1
 ```
 
-## 파라메트릭 서치 (Parametric Search)
+## 파라메트릭 서치 (Parametric Search) ⭐️
 주어진 범위 내에서 원하는 값 또는 원하는 조건에 가장 일치하는 값을 찾아내는 알고리즘<br>
 최적화 문제(최댓값 x = ?) -> 결정문제(x일 경우 최댓값?)로 바꾸어 풀 수 있다.<br>
 - 범위의 중간값과 조건을 비교하며 범위를 수정해나간다
@@ -472,16 +532,15 @@ def binary_search(array, target, start, end):
 # 최적화문제: 24시간을 7시간마다 배고파지는 사람이 최소 몇끼니를 먹어야 배부르게 지낼수있는가?
 # 결정문제: 7시간마다 배고파지는 사람이 x끼니를 먹으면 24시간을 배부르게 지낼 수 있다.
 def parametricSearch(start, end) {
-    mid = (start + end) / 2
-    currentValue = mid
+    result = 0
     while (start <= end):
-        if (24 / mid) > 7:   
-            start = mid + 0.1
-        elif (24 / mid) < 7:
+        mid = (start + end) / 2
+        if (24 / mid) < 7:
             end = mid - 0.1
-        else
-            return currentValue
-    return mid
+        else:
+            start = mid + 0.1
+            result = mid
+    return result
 }
 ```
 [파라메트릭 서치 블로그](https://marades.tistory.com/7)
@@ -602,7 +661,7 @@ for a in range(1, n+1):
     print()
 ```
 
-## 서로소 집합
+## 유니언 파인드 ⭐️
 공통 원소가 없는 집합이 필요한 경우<br>
 하나의 집합으로 합치는 `union` 과 원소가 속한 집합을 알려주는 `find` 연산이 필요<br>
 `union` 의 경우 `작은 노드값`이 집합의 값이 된다.<br>
@@ -610,6 +669,7 @@ for a in range(1, n+1):
 # 노드값과 집합값이 같을때까지 재귀적으로 호출
 def findParent(parents, x):
     if parents[x] != x:
+        # 경로 압축
         parents[x] = findParent(parents, parants[x])
     return parents[x]
 
@@ -637,7 +697,7 @@ print()
 
 ## 사이클 판별
 `유향` 그래프: `DFS` 알고리즘<br>
-`무향` 그래프: `서로소` 집합 알고리즘<br>
+`무향` 그래프: `유니언 파인드` 집합 알고리즘<br>
 ```python
 # 무향그래프에서 사이클 판별
 v, e = map(int, input().split())
@@ -696,7 +756,7 @@ print(result)
 
 ## 위상정렬
 우선순위(선후관계)에 따라 방향성에 거스르지 않도록 순서대로 나열<br>
-진입차수 테이블과 deque가 필요<br>
+진입차수 테이블과 queue(deque)가 필요<br>
 1. 진입차수가 0인 노드를 큐에 넣는다
 2. 큐가 빌때까지 꺼내며 해당 노드부터 출발하는 간선을 제거하며 진입차수가 0인 노드를 큐에 넣는다
 `O(V+E)`
@@ -756,12 +816,10 @@ def isPrime(n):
 범위 내 숫자들에서 합성수를 반복적으로 지우는 방식으로 소수를 찾는다.<br>
 - 지워지지 않은수 중 작은수를 소수로 채택, 해당 수의 배수를 모두 제거
 ```python
-import math
-
 def prime_list(n):
     prime = [True]*(n+1)
     
-    for i in range(2, math.isqrt(n)+1):
+    for i in range(2, int(n**0.5)+1):
         if prime[i] == True:
             for j in range(2*i, n+1, i):
                 prime[j] = False
@@ -770,3 +828,15 @@ def prime_list(n):
 ```
 [에라토스테네스의 체 블로그1](https://wikidocs.net/21638)
 [에라토스테네스의 체 블로그2](https://this-programmer.tistory.com/409)
+
+## 약수구하기
+1부터 루트n까지 n을 나누는 수들을 확인
+```python
+def divisors(n):
+    result = []
+    for i in range(1, int(n**0.5)+1):
+        if n%i == 0:
+            result.append(i)
+            result.append(n/i)
+    return set(result)
+```
