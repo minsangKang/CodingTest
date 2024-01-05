@@ -474,6 +474,37 @@ def sort(array):
     return sort(left_side) + [pivot] + sort(right_side)
 ```
 
+## 병합 정렬
+`O(n log n)` 
+분할 정복(divide and conqure) 방법을 통해 크가 같은 두 리스트로 분할 후 각각 정렬한 결과를 합병<br>
+분할하는 횟수는 절반식 줄어들기에 O(logN) 시간이 소모된다.<br>
+병합할 때 모든 값들을 비교해야 하기 때문에 O(N) 시간이 소모된다.<br>
+퀵정렬보다는 느리지만 최악의 경우도 O(n log n)보장<br>
+```python
+def merge_sort(arr):
+    if len(arr) < 2:
+        return arr
+
+    mid = len(arr) // 2
+    low_arr = merge_sort(arr[:mid])
+    high_arr = merge_sort(arr[mid:])
+
+    merged_arr = []
+    l = h = 0
+    while l < len(low_arr) and h < len(high_arr):
+        # 좌측이 더 작은 경우 -> 좌측 merged에 추가
+        if low_arr[l] < high_arr[h]:
+            merged_arr.append(low_arr[l])
+            l += 1
+        # 우측이 더 작은 경우 -> 우측 merged에 추가
+        else:
+            merged_arr.append(high_arr[h])
+            h += 1
+    merged_arr += low_arr[l:]
+    merged_arr += high_arr[h:]
+    return merged_arr
+```
+
 ## 계수 정렬
 `O(n + k)` (k: 가장큰 수)<Br>
 범위가 정해진 정수, 중복이 많은 경우 효율적<br>
@@ -491,9 +522,6 @@ def sort(array):
 
   return sorted
 ```
-
-## 병합 정렬
-`O(n log n)` 퀵정렬보다는 느리지만 최악의 경우도 보장<br>
 
 ## 순차 탐색
 `O(n)` 앞에서부터 차례로 확인<br>
